@@ -1,0 +1,21 @@
+{
+  "name": "nextjs-foamtree",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "next": "^12.3.4",
+    "next-transpile-modules": "10.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@carrotsearch/foamtree": "3.5.1"
+  }
+}
