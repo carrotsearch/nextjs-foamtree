@@ -4,8 +4,7 @@ export const FoamTree = ({ data }) => {
   const element = useRef();
 
   // Dynamically imported FoamTree implementation.
-  // This is a module containing the FoamTree class definition.
-  const [ foamtreeModule, setFoamtreeModule ] = useState();
+  const [ FoamTreeClass, setFoamTreeClass ] = useState();
 
   // FoamTree instance embedded in the element.
   const [ foamtreeInstance, setFoamTreeInstance ] = useState();
@@ -20,8 +19,11 @@ export const FoamTree = ({ data }) => {
         return;
       }
 
-      if (!disposed && !foamtreeModule) {
-        setFoamtreeModule(module);
+      if (!disposed) {
+        // We want to set the FoamTree constructor to the state, so to prevent React
+        // from invoking the constructor (through the functional variant of set state),
+        // we wrap it in another function call.
+        setFoamTreeClass(() => module.FoamTree);
       }
     });
 
@@ -35,8 +37,8 @@ export const FoamTree = ({ data }) => {
     // If the FoamTree instance is already created, let the effect run to
     // capture the instance into the disposal closure, so that we have a handle
     // we can use to call foamtree.dispose().
-    if (foamtreeModule && !foamtreeInstance) {
-      setFoamTreeInstance(new foamtreeModule.FoamTree({
+    if (FoamTreeClass && !foamtreeInstance) {
+      setFoamTreeInstance(new FoamTreeClass({
         element: element.current
       }));
     }
@@ -47,7 +49,7 @@ export const FoamTree = ({ data }) => {
         setFoamTreeInstance(null);
       }
     }
-  }, [ foamtreeModule, foamtreeInstance ]);
+  }, [ FoamTreeClass, foamtreeInstance ]);
 
   // Set dataObject, if changed
   useEffect(() => {
