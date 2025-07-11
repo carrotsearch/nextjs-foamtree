@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { FoamTree } from "../src/FoamTree.js";
 
 function index() {
-  return <FoamTree data={data} />;
+  const [ mounted, setMounted ] = useState(true)
+
+  return <div>
+    <button onClick={() => setMounted(!mounted)}>{mounted ? "Unmount" : "Mount"}</button>
+    {mounted && <FoamTree data={data} />}
+  </div>
 }
 
 export default index;
